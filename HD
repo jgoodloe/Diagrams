@@ -1,0 +1,55 @@
+---
+config:
+  theme: neutral
+  look: neo
+  layout: dagre
+---
+flowchart TD
+    A["Incoming Request"] --> B["Log Ticket in System"]
+    B --> C{"Classify Request"}
+    C --> D["General Inquiry / How-To"] & E["Incident / Bug Report"] & F["Feature Request"] & G["Contract / Scope Issue"] & H["Third-Party / Non-XTec Issue"] & I["RMA Request"]
+    D --> D1{"Answer Available?"}
+    D1 -- Yes --> D2["Provide Answer & Close Ticket"]
+    D1 -- No --> D3["Escalate to Tier 2"]
+    E --> E1{"Known Issue?"}
+    E1 -- Yes --> E2["Provide Fix or Workaround → Close"]
+    E1 -- No / Unknown Bug --> E3["Escalate to Tier 2"]
+    E3 --> E4["Tier 2 Investigates"]
+    E4 --> E5{"Resolved by Tier 2?"}
+    E5 -- "Yes - Known Bug" --> E6["Close Ticket - Tier 2"]
+    E5 -- "Yes - New / Unknown Bug" --> E7["Document Bug & Solution in KB"]
+    E7 --> E8["Update Ticket & Communicate to Customer"]
+    E8 --> E9["Close Ticket - Tier 2"]
+    E5 -- No --> E10["Escalate to Tier 3 Engineering"]
+    E10 --> E11["Tier 3 Investigates / Fixes"]
+    E11 --> E12{"Resolved?"}
+    E12 -- Yes --> E13["Close Ticket - Engineering"]
+    E12 -- No --> E14["Assign to Project Management / Product Team"]
+    F --> F1{"Covered by Contract?"}
+    F1 -- Yes --> F2["Assign to Engineering / Project Management"]
+    F1 -- No / Unsure --> F3["Assign to Account Management"]
+    F2 --> F4["Evaluate for Roadmap / Future Release"]
+    F3 --> F5["Customer Quote or Proposal"]
+    G --> G1["Assign to Sales / Account Management"]
+    G1 --> G2["Customer Communication & Resolution"]
+    H --> H1["Inform Customer & Redirect"]
+    H1 --> H2["Close Ticket"]
+    I --> I1{"Under Warranty / Contract?"}
+    I1 -- Yes --> I2["Collect Device Info"]
+    I2 --> I3["Issue RMA Number & Instructions"]
+    I3 --> I4["Track Shipment & Replacement"]
+    I4 --> I5["Close Ticket - RMA Completed"]
+    I1 -- No --> I6["Assign to Sales / Account Management for Options"]
+    I6 --> I7["Communicate Options to Customer"]
+    D2 --> Z["Communicate Resolution to Customer"]
+    E2 --> Z
+    E6 --> Z
+    E9 --> Z
+    E13 --> Z
+    F4 --> Z
+    F5 --> Z
+    G2 --> Z
+    H2 --> Z
+    I5 --> Z
+    I7 --> Z
+    Z --> X["Ticket Closed"]
